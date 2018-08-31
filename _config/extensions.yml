@@ -1,0 +1,9 @@
+---
+Name: silvercart-facebook-plugins-extensions
+---
+SilverCart\Model\Pages\PageController:
+  extensions:
+    - SilverCart\FacebookPlugins\Extensions\Pages\PageControllerExtension
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - SilverCart\FacebookPlugins\Extensions\SiteConfigExtension
