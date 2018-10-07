@@ -4,9 +4,12 @@ namespace SilverCart\FacebookPlugins\Extensions;
 
 use SilverCart\Dev\Tools;
 use SilverCart\Forms\FormFields\TextareaField;
+use SilverCart\Forms\FormFields\TextField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\FieldType\DBText;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 
 /**
@@ -27,7 +30,12 @@ class SiteConfigExtension extends DataExtension
      * @var array
      */
     private static $db = [
-        'FacebookPluginSDKCode' => 'Text',
+        'FacebookPluginSDKCode'      => DBText::class,
+        'FacebookAppID'              => 'Varchar(32)',
+        'FacebookAppSecret'          => 'Varchar(48)',
+        'FacebookDefaultAccessToken' => 'Varchar(48)',
+        'FacebookAccessToken'        => DBText::class,
+        'FacebookPageID'             => 'Varchar(32)',
     ];
     /**
      * Casted attributes
@@ -51,6 +59,17 @@ class SiteConfigExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         $fields->findOrMakeTab('Root.SocialMedia')->setTitle($this->owner->fieldLabel('SocialMediaTab'));
+        $fields->addFieldToTab('Root.SocialMedia', ToggleCompositeField::create(
+                'FacebookAppConnection',
+                $this->owner->fieldLabel('FacebookAppConnection'),
+                [
+                    TextField::create('FacebookAppID',              $this->owner->fieldLabel('FacebookAppID')),
+                    TextField::create('FacebookAppSecret',          $this->owner->fieldLabel('FacebookAppSecret')),
+                    TextField::create('FacebookDefaultAccessToken', $this->owner->fieldLabel('FacebookDefaultAccessToken')),
+                    TextField::create('FacebookAccessToken',        $this->owner->fieldLabel('FacebookAccessToken')),
+                    TextField::create('FacebookPageID',             $this->owner->fieldLabel('FacebookPageID')),
+                ]
+        )->setStartClosed(!empty($this->owner->FacebookAppID)));
         $fields->addFieldToTab('Root.SocialMedia', TextareaField::create('FacebookPluginSDKCode', $this->owner->fieldLabel('FacebookPluginSDKCode'))
                 ->setDescription($this->owner->fieldLabel('FacebookPluginSDKCodeDesc')));
         if (empty($this->owner->FacebookPluginSDKCode)) {
@@ -72,7 +91,10 @@ class SiteConfigExtension extends DataExtension
     {
         $labels = array_merge(
                 $labels,
-                Tools::field_labels_for(self::class)
+                Tools::field_labels_for(self::class),
+                [
+                    'FacebookAppConnection' => _t(self::class . ".FacebookAppConnection", "Facebook App Connection Settings"),
+                ]
         );
     }
     

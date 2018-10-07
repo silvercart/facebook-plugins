@@ -16,6 +16,7 @@
         }
     ],
     "require": {
+        "facebook/graph-sdk": "^5.6",
         "silvercart/silvercart": "~4.1"
     }
 }

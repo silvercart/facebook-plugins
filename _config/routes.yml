@@ -1,0 +1,7 @@
+---
+Name: silvercart-facebook-plugins-routes
+---
+SilverStripe\Control\Director:
+  rules:
+    'facebook/dev//$Action/$ID': SilverCart\FacebookPlugins\Dev\Tasks\DevTask
+    'facebook/events//$Action/$ID': SilverCart\FacebookPlugins\Dev\Tasks\EventsTask
