@@ -153,14 +153,13 @@ class Event extends DataObject
      * @return \SilverStripe\ORM\DataList
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 07.10.2018
+     * @since 09.10.2018
      */
     public static function getUpcoming()
     {
         return self::get()
-                ->leftJoin('FacebookEventTime', 'FacebookEvent.ID = FET.EventID', 'FET')
-                ->where("FET.StartTime > NOW()")
-                ->sort("StartTime", "ASC");
+                ->leftJoin("(SELECT FET.StartTime, FET.EventID FROM FacebookEventTime AS FET WHERE FET.StartTime > NOW() GROUP BY FET.EventID ORDER BY FET.StartTime ASC)", 'FacebookEvent.ID = FET1.EventID', 'FET1')
+                ->sort("FET1.StartTime ASC");
     }
     
     /**
