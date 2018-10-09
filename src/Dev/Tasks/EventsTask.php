@@ -49,6 +49,7 @@ class EventsTask extends Task
     }
     
     /**
+     * Pulls Facebook events and updates the local database.
      * 
      * @return void
      * 
