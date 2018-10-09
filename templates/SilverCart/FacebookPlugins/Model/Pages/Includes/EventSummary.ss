@@ -20,8 +20,8 @@
                     <a class="ml-2" href="{$Link}"><span class="fa fa-arrow-right"></span> weitere Details</a>
                     <a class="ml-2" href="{$FacebookLink}" target="blank"><span class="fa fa-facebook-square"></span> {$fieldLabel('OpenInFacebook')} <span class="fa fa-xs fa-external-link"></span></a>
                 </span>
-                <% loop $EventTimes.limit(2) %>
-                <a class="border rounded mt-2 p-1 pb-0 mr-2 d-inline-block" href="{$Link}">
+                <% loop $UpcomingTimes.limit(2) %>
+                <a class="border rounded mt-2 p-1 pb-0 mr-2 d-inline-block" href="{$FacebookLink}" target="blank">
                     <span class="float-left text-center mx-1">
                         <span class="d-block text-uppercase text-danger">{$StartTime.ShortMonth}</span>
                         <span class="d-block text-lg line-height-1">{$StartTime.Format('dd')}</span>
@@ -29,9 +29,9 @@
                     <span class="font-weight-bold ml-2 line-height-3 d-inline-block"><span class="fa fa-clock-o"></span> {$StartTime.Format('EEEEEE')} {$StartTime.Format('HH:mm')} <%t SilverCart\Model\Pages\Page.Oclock 'o\'clock' %></span>
                 </a>
                 <% end_loop %>
-                <% if $EventTimes.limit(1000,2) %>
-                <a class="border rounded mt-2 p-1 pb-0 mr-2 d-inline-block" href="{$Link}">
-                    <span class="font-weight-bold mx-3 line-height-3 d-inline-block">+{$EventTimes.limit(1000,2).count}</span>
+                <% if $UpcomingTimes.limit(1000,2) %>
+                <a class="border rounded mt-2 p-1 pb-0 mr-2 d-inline-block" href="{$Link}#times">
+                    <span class="font-weight-bold mx-3 line-height-3 d-inline-block">+{$UpcomingTimes.limit(1000,2).count}</span>
                 </a>
                 <% end_if %>
             </div>

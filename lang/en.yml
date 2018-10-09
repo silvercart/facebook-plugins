@@ -39,6 +39,7 @@ de:
     ShowAll: "Show all"
     ShowMore: "Show more"
     UpcomingEvents: "Upcoming Events"
+    UpcomingTimes: "Upcoming Dates"
   SilverCart\FacebookPlugins\Model\Widgets\PagePluginWidget:
     CMSTITLE: "Facebook Page Plugin"
     DESCRIPTION: "This widget shows a custom Facebook Page Plugin."

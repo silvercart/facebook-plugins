@@ -39,6 +39,7 @@ de:
     ShowAll: "Alle anzeigen"
     ShowMore: "Weitere Veranstaltungen"
     UpcomingEvents: "Bevorstehende Veranstaltungen"
+    UpcomingTimes: "Bevorstehende Termine"
   SilverCart\FacebookPlugins\Model\Widgets\PagePluginWidget:
     CMSTITLE: "Facebook Seiten-Plugin"
     DESCRIPTION: "Dieses Widget zeigt ein konfigurierbares Facebook Seiten-Plugin an."
