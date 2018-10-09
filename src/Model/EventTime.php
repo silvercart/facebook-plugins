@@ -102,7 +102,7 @@ class EventTime extends DataObject
      */
     public function FacebookLink()
     {
-        return $this->Event()->FacebookLink();
+        return "{$this->Event()->FacebookLink()}?event_time_id={$this->FacebookID}";
     }
     
     /**
