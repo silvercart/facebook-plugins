@@ -108,9 +108,6 @@ class Client
         if (!empty($config->FacebookAccessToken)) {
             $this->config()->set('access_token', $config->FacebookAccessToken);
         }
-        if (!empty($config->FacebookAppID)) {
-            $this->config()->set('app_id', $config->FacebookAppID);
-        }
         if (!empty($config->FacebookPageID)) {
             $this->config()->set('page_id', $config->FacebookPageID);
         }
@@ -127,7 +124,7 @@ class Client
             $fbConfig = [
                 'app_id'                => $this->config()->get('app_id'),
                 'app_secret'            => $this->config()->get('app_secret'),
-                'default_graph_version' => 'v2.10',
+                'default_graph_version' => 'v3.1',
             ];
             if (!empty($this->config()->get('default_access_token'))) {
                 $fbConfig['default_access_token'] = $this->config()->get('default_access_token');
@@ -158,6 +155,43 @@ class Client
     {
         $this->task = $task;
         return $this;
+    }
+    /**
+     * Pulls the API user context accounts.
+     * 
+     * @return array
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 08.10.2018
+     */
+    public function getAccounts()
+    {
+        $accounts = [];
+        $response = $this->sendGetRequest("/me/accounts");
+        if (!is_null($response)) {
+            $decodedBody = $response->getDecodedBody();
+            $accounts    = $decodedBody['data'];
+        }
+        return $accounts;
+    }
+    
+    /**
+     * Pulls the page account data from Facebook and sets the access token and
+     * page ID.
+     * 
+     * @return void
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 08.10.2018
+     */
+    public function setPageAccessToken()
+    {
+        $accounts    = $this->getAccounts();
+        $pageAccount = array_shift($accounts);
+        if (is_array($pageAccount)) {
+            $this->config()->update('access_token', $pageAccount['access_token']);
+            $this->config()->update('page_id',      $pageAccount['id']);
+        }
     }
     
     /**

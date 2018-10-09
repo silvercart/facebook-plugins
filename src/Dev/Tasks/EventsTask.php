@@ -2,9 +2,12 @@
 
 namespace SilverCart\FacebookPlugins\Dev\Tasks;
 
+use SilverCart\Extensions\Assets\ImageExtension;
 use SilverCart\FacebookPlugins\Client\EventsClient;
 use SilverCart\FacebookPlugins\Model\Event;
 use SilverCart\FacebookPlugins\Model\EventTime;
+use SilverStripe\Assets\Image;
+use SilverStripe\View\ArrayData;
 
 /**
  * Task to pull a page's events from Facebook.
@@ -58,6 +61,7 @@ class EventsTask extends Task
         if (!is_null($events)) {
             $totalEvents  = count($events);
             $currentIndex = 1;
+            $this->printInfo("Found {$totalEvents} events.");
             foreach ($events as $event) {
                 $xofy          = $this->getXofY($currentIndex, $totalEvents);
                 $currentIndex++;
@@ -80,6 +84,10 @@ class EventsTask extends Task
                 $existingEvent->Place       = $event['place']['name'];
                 $existingEvent->EndTime     = $endTime;
                 $existingEvent->StartTime   = $startTime;
+                $existingEvent->CountAttending  = $event['attending_count'];
+                $existingEvent->CountInterested = $event['interested_count'];
+                $existingEvent->CountMaybe      = $event['maybe_count'];
+                $existingEvent->CoverID         = $this->getCover($event['cover'])->ID;
                 $existingEvent->write();
                 
                 $eventTimes  = $event['event_times'];
@@ -109,6 +117,38 @@ class EventsTask extends Task
                 }
                 $existingEvent->EventTimes()->exclude('FacebookID', $facebookIDs)->where('StartTime > NOW()')->removeAll();
             }
+        } else {
+            $this->printInfo("No events found.");
         }
+    }
+    
+    /**
+     * Returns the local event cover image.
+     * If the cover image doesn't exist yet it will be created.
+     * 
+     * @param array $coverData Facebook cover data
+     * 
+     * @return Image
+     */
+    protected function getCover($coverData)
+    {
+        $uploadFolder   = Event::getCoverUploadFolder();
+        $existingCovers = Image::get()->filter([
+            'Title'    => $coverData['id'],
+            'ParentID' => $uploadFolder->ID,
+        ]);
+        if ($existingCovers->exists()) {
+            return $existingCovers->first();
+        }
+        $coverSource    = $coverData['source'];
+        $ending         = ImageExtension::getEndingForFilePath($coverSource);
+        $targetFilename = "{$coverData['id']}.{$ending}";
+        $uploadPath     = ASSETS_PATH . DIRECTORY_SEPARATOR . $uploadFolder->Filename;
+        if (empty($ending)) {
+            $cover = ArrayData::create(['ID' => 0]);
+        } else {
+            $cover = ImageExtension::create_from_path($coverSource, $uploadPath, $targetFilename);
+        }
+        return $cover;
     }
 }

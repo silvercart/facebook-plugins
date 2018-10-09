@@ -3,5 +3,6 @@ Name: silvercart-facebook-plugins-routes
 ---
 SilverStripe\Control\Director:
   rules:
+    'fb/events//$Action!/$Type!/$Offset!/$Length!': SilverCart\FacebookPlugins\Control\EventsController
     'facebook/dev//$Action/$ID': SilverCart\FacebookPlugins\Dev\Tasks\DevTask
     'facebook/events//$Action/$ID': SilverCart\FacebookPlugins\Dev\Tasks\EventsTask

@@ -31,4 +31,24 @@ class PageControllerExtension extends Extension
     {
         $footerCustomHtmlContent .= SiteConfig::current_site_config()->FacebookPluginSDKCode;
     }
+    
+    /**
+     * Adds some JS files.
+     * 
+     * @param array &$jsFiles JS files
+     * 
+     * @return void
+     *
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 10.07.2018
+     */
+    public function updateRequireExtendedJavaScript(&$jsFiles)
+    {
+        $jsFiles = array_merge(
+            $jsFiles,
+            [
+                'silvercart/facebook-plugins:client/js/Facebook.js',
+            ]
+        );
+    }
 }

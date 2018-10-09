@@ -13,11 +13,13 @@ de:
   SilverCart\FacebookPlugins\Model\Event:
     PLURALNAME: "Facebook Events"
     SINGULARNAME: "Facebook Event"
+    Cover: "Cover Picture"
     Description: "Description"
     EndTime: "Ends on"
     EventTimes: "Times"
     FacebookID: "Facebook ID"
     Name: "Name"
+    OpenInFacebook: "Open in Facebook"
     Place: "Place / Region"
     StartTime: "Starts on"
   SilverCart\FacebookPlugins\Model\EventTime:
@@ -27,6 +29,16 @@ de:
     Event: "Event"
     FacebookID: "Facebook ID"
     StartTime: "Starts on"
+  SilverCart\FacebookPlugins\Model\Pages\EventsPage:
+    PLURALNAME: "Facebook Events Pages"
+    SINGULARNAME: "Facebook Events Page"
+    LoadAdditionalEvents: "Load additional events"
+    PageXofYPlural: "Page {current} of {pages} | {items} events on {pages} pages"
+    PageXofYSingular: "{items} events on one page"
+    PastEvents: "Past Events"
+    ShowAll: "Show all"
+    ShowMore: "Show more"
+    UpcomingEvents: "Upcoming Events"
   SilverCart\FacebookPlugins\Model\Widgets\PagePluginWidget:
     CMSTITLE: "Facebook Page Plugin"
     DESCRIPTION: "This widget shows a custom Facebook Page Plugin."
@@ -45,3 +57,9 @@ de:
     HideCoverDesc: "Hide the cover photo in the header."
     ShowFacePile: "Show Friend's Faces"
     ShowFacePileDesc: "Shop profile photos when friends like this."
+  SilverCart\FacebookPlugins\Model\Widgets\UpcomingEventsWidget:
+    CMSTITLE: "Upcoming Facebook Events"
+    DESCRIPTION: "This widget shows upcoming Facebook events."
+    TITLE: "Upcoming Facebook Events"
+    EventQuantity: "Event count"
+    EventQuantityDesc: "Quantity of upcoming Facebook events to show."
