@@ -97,6 +97,19 @@ class EventTime extends DataObject
     }
     
     /**
+     * Returns whether this EventTime is past.
+     * 
+     * @return boolean
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 17.10.2018
+     */
+    public function IsPast()
+    {
+        return time() > strtotime($this->EndTime);
+    }
+    
+    /**
      * Returns the Facebook link to this EventTime.
      * 
      * @return string

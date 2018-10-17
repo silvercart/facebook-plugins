@@ -148,6 +148,19 @@ class Event extends DataObject
     }
     
     /**
+     * Returns upcoming events excluding this event.
+     * 
+     * @return \SilverStripe\ORM\DataList
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 17.10.2018
+     */
+    public function OtherUpcomingEvents()
+    {
+        return $this->getUpcoming()->exclude('ID', $this->ID);
+    }
+    
+    /**
      * Returns all upcoming events.
      * 
      * @return \SilverStripe\ORM\DataList

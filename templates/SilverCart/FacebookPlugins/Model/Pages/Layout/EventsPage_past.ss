@@ -1,5 +1,6 @@
+<% cached $PaginatedPastEvents.Max('LastEdited') %>
 <div class="row">
-    <section id="content-main" class="col-12 col-md-9">
+    <section id="content-main" class="col-12 col-md-8">
         <h2 class="sr-only"><%t SilverCart\FacebookPlugins\Model\Pages\EventsPage.PastEvents 'Past Events' %></h2>
         <% include SilverCart/Model/Pages/BreadCrumbs %>
         <article class="bg-white border shadow-sm">
@@ -24,8 +25,15 @@
         </article>
         <% include SilverCart/Model/Pages/WidgetSetContent %>
     </section>
-    <aside class="col-12 col-md-3">
-        {$SubNavigation}
+    <aside class="col-12 col-md-4">
+    <% if $Events.limit(3) %>
+        <% loop $Events.limit(3) %>
+            <% include SilverCart/FacebookPlugins/Model/Pages/EventSmallSummary %>
+        <% end_loop %>
+    <% end_if %>
+    <% uncached %>
         {$InsertWidgetArea('Sidebar')}
+    <% end_uncached %>
     </aside>
 </div>
+<% end_cached %>

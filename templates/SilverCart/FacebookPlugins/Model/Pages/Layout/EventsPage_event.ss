@@ -1,5 +1,6 @@
+<% cached $EventTimes.Max('LastEdited') %>
 <div class="row">
-    <section id="content-main" class="col-12 col-md-9">
+    <section id="content-main" class="col-12 col-md-8">
         <h2 class="sr-only">{$Event.Name}</h2>
         <% include SilverCart/Model/Pages/BreadCrumbs %>
         <% if $Event %>
@@ -59,8 +60,15 @@
         <% end_if %>
         <% include SilverCart/Model/Pages/WidgetSetContent %>
     </section>
-    <aside class="col-12 col-md-3">
-        {$SubNavigation}
+    <aside class="col-12 col-md-4">
+    <% if $Event.OtherUpcomingEvents.limit(3) %>
+        <% loop $Event.OtherUpcomingEvents.limit(3) %>
+            <% include SilverCart/FacebookPlugins/Model/Pages/EventSmallSummary %>
+        <% end_loop %>
+    <% end_if %>
+    <% uncached %>
         {$InsertWidgetArea('Sidebar')}
+    <% end_uncached %>
     </aside>
 </div>
+<% end_cached %>
