@@ -3,7 +3,7 @@
     <section id="content-main" class="col-12 col-md-8">
         <h2 class="sr-only"><%t SilverCart\FacebookPlugins\Model\Pages\EventsPage.UpcomingEvents 'Upcoming Events' %></h2>
         <% include SilverCart/Model/Pages/BreadCrumbs %>
-        <article class="bg-white border shadow-sm">
+        <article class="bg-white border shadow-sm" id="times">
         <% if $PaginatedUpcomingEvents %>
             <header class="p-3 mb-3 border-bottom">
                 <h1 class="p-0 m-0 d-inline-block"><%t SilverCart\FacebookPlugins\Model\Pages\EventsPage.UpcomingEvents 'Upcoming Events' %></h1>

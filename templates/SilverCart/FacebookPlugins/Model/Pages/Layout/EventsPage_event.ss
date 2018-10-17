@@ -1,4 +1,4 @@
-<% cached $Event.EventTimes.Max('LastEdited') %>
+<% cached $Event.ID, $Event.EventTimes.Max('LastEdited'), $Event.UpcomingTimesCurrentPageStart %>
 <div class="row">
     <section id="content-main" class="col-12 col-md-8">
         <h2 class="sr-only">{$Event.Name}</h2>
@@ -17,7 +17,7 @@
                 <span class="text-muted text-md d-block mb-3 pb-2 pt-0 border-bottom"><span class="fa fa-map-marker"></span> {$Place.Nice}</span>
                 <span class="text-muted text-md d-block mb-0 pb-2 pt-0"><span class="fa fa-clock-o"></span> <%t SilverCart.Until 'until' %> {$EndTime.Format('dd')}. {$EndTime.ShortMonth}</span>
                 <div class="pl-4">
-                <% loop $UpcomingTimes.limit(4) %>
+                <% loop $UpcomingTimes.limit(3) %>
                     <a class="border rounded p-1 pb-0 mr-2 mb-2 d-inline-block" href="{$FacebookLink}" target="blank">
                         <span class="float-left text-center mx-1">
                             <span class="d-block text-uppercase text-danger">{$StartTime.ShortMonth}</span>
@@ -26,9 +26,9 @@
                         <span class="font-weight-bold ml-2 line-height-3 d-inline-block"><span class="fa fa-clock-o"></span> {$StartTime.Format('EEEEEE')} {$StartTime.Format('HH:mm')} <%t SilverCart\Model\Pages\Page.Oclock 'o\'clock' %></span>
                     </a>
                 <% end_loop %>
-                <% if $UpcomingTimes.limit(1000,4) %>
+                <% if $UpcomingTimes.limit(1000,3) %>
                     <a class="border rounded p-1 pb-0 mr-2 mb-2 d-inline-block" href="#times">
-                        <span class="font-weight-bold mx-3 line-height-3 d-inline-block">+{$UpcomingTimes.limit(1000,4).count}</span>
+                        <span class="font-weight-bold mx-3 line-height-3 d-inline-block">+{$UpcomingTimes.limit(1000,3).count}</span>
                     </a>
                 <% end_if %>
                 </div>

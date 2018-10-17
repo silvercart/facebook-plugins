@@ -26,7 +26,7 @@
                 <% end_loop %>
                 <% if $UpcomingTimes.limit(1000,1) %>
                 <a class="border rounded mt-2 p-1 pb-0 mr-2 d-inline-block" href="{$Link}#times">
-                    <span class="font-weight-bold mx-3 line-height-3 d-inline-block">+{$UpcomingTimes.limit(1000,2).count}</span>
+                    <span class="font-weight-bold mx-3 line-height-3 d-inline-block">+{$UpcomingTimes.limit(1000,1).count}</span>
                 </a>
                 <% end_if %>
             </div>

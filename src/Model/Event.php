@@ -203,4 +203,21 @@ class Event extends DataObject
         $list->setPageLength(EventsPage::config()->get('event_time_page_length'));
         return $list;
     }
+    
+    /**
+     * Returns the current page start for upcoming times.
+     * 
+     * @return int
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 17.10.2018
+     */
+    public function UpcomingTimesCurrentPageStart()
+    {
+        $start = Controller::curr()->getRequest()->getVar('start');
+        if (is_null($start)) {
+            $start = 0;
+        }
+        return $start;
+    }
 }
