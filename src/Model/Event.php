@@ -158,8 +158,9 @@ class Event extends DataObject
     public static function getUpcoming()
     {
         return self::get()
-                ->leftJoin("(SELECT FET.StartTime, FET.EventID FROM FacebookEventTime AS FET WHERE FET.StartTime > NOW() GROUP BY FET.EventID ORDER BY FET.StartTime ASC)", 'FacebookEvent.ID = FET1.EventID', 'FET1')
-                ->sort("FET1.StartTime ASC");
+                ->where("FacebookEvent.EndTime > NOW()")
+                ->leftJoin("(SELECT MIN(FET.StartTime) AS MinStartTime, FET.EventID FROM FacebookEventTime AS FET WHERE FET.StartTime > NOW() GROUP BY FET.EventID ORDER BY MIN(FET.StartTime) ASC)", 'FacebookEvent.ID = FET1.EventID', 'FET1')
+                ->sort("FET1.MinStartTime ASC");
     }
     
     /**
