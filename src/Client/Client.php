@@ -64,6 +64,12 @@ class Client
      * @var \SilverCart\FacebookPlugins\Dev\Tasks\Task
      */
     protected $task = null;
+    /**
+     * Current page access token.
+     *
+     * @var string
+     */
+    protected $pageAccessToken = null;
 
     /**
      * Returns the Facebook access token.
@@ -186,11 +192,14 @@ class Client
      */
     public function setPageAccessToken()
     {
-        $accounts    = $this->getAccounts();
-        $pageAccount = array_shift($accounts);
-        if (is_array($pageAccount)) {
-            $this->config()->update('access_token', $pageAccount['access_token']);
-            $this->config()->update('page_id',      $pageAccount['id']);
+        if (is_null($this->pageAccessToken)) {
+            $accounts    = $this->getAccounts();
+            $pageAccount = array_shift($accounts);
+            if (is_array($pageAccount)) {
+                $this->config()->update('access_token', $pageAccount['access_token']);
+                $this->config()->update('page_id',      $pageAccount['id']);
+                $this->pageAccessToken = $pageAccount['access_token'];
+            }
         }
     }
     
