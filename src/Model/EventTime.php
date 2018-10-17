@@ -220,7 +220,7 @@ class EventTime extends DataObject
      */
     public static function getUpcoming()
     {
-        return self::get()->where("StartTime > NOW()")->sort("StartTime", "ASC");
+        return self::get()->where("EndTime > NOW()")->sort("StartTime", "ASC");
     }
     
     /**
@@ -229,10 +229,10 @@ class EventTime extends DataObject
      * @return \SilverStripe\ORM\DataList
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 07.10.2018
+     * @since 17.10.2018
      */
     public static function getPast()
     {
-        return self::get()->where("StartTime < NOW()")->sort("StartTime", "DESC");
+        return self::get()->where("EndTime < NOW()")->sort("StartTime", "DESC");
     }
 }

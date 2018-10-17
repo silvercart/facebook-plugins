@@ -1,4 +1,4 @@
-<% cached $PaginatedPastEvents.Max('LastEdited'), $CurrentEventPageStart %>
+<% cached $PaginatedPastEvents.Max('LastEdited'), $PaginatedPastEvents.TotalItems, $CurrentEventPageStart %>
 <div class="row">
     <section id="content-main" class="col-12 col-md-8">
         <h2 class="sr-only"><%t SilverCart\FacebookPlugins\Model\Pages\EventsPage.PastEvents 'Past Events' %></h2>

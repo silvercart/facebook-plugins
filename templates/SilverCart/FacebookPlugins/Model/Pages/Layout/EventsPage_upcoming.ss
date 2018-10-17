@@ -1,4 +1,4 @@
-<% cached $PaginatedUpcomingEvents.Max('LastEdited') %>
+<% cached $PaginatedUpcomingEvents.Max('LastEdited'), $PaginatedUpcomingEvents.TotalItems, $CurrentEventPageStart %>
 <div class="row">
     <section id="content-main" class="col-12 col-md-8">
         <h2 class="sr-only"><%t SilverCart\FacebookPlugins\Model\Pages\EventsPage.UpcomingEvents 'Upcoming Events' %></h2>
