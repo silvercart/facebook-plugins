@@ -102,7 +102,11 @@ class EventTime extends DataObject
      */
     public function FacebookLink()
     {
-        return "{$this->Event()->FacebookLink()}?event_time_id={$this->FacebookID}";
+        $paramEventTimeID = "";
+        if ($this->FacebookID !== "0") {
+            $paramEventTimeID = "?event_time_id={$this->FacebookID}";
+        }
+        return "{$this->Event()->FacebookLink()}{$paramEventTimeID}";
     }
     
     /**
