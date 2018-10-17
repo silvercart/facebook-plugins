@@ -1,4 +1,4 @@
-<% cached $EventTimes.Max('LastEdited') %>
+<% cached $Event.EventTimes.Max('LastEdited') %>
 <div class="row">
     <section id="content-main" class="col-12 col-md-8">
         <h2 class="sr-only">{$Event.Name}</h2>
