@@ -16,5 +16,5 @@
         <span class="text-muted" title="{$Event.Place.Nice}"><span class="fa fa-map-marker"></span> {$Event.Place.Name}</span>
         <a class="float-right" href="{$FacebookLink}" target="blank"><span class="fa fa-facebook-square"></span> {$Event.fieldLabel('OpenInFacebook')} <span class="fa fa-xs fa-external-link"></span></a><br/>
     </div>
-</div>
 {$Microdata}
+</div>
