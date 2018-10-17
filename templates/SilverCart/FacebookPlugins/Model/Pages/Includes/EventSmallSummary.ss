@@ -5,7 +5,7 @@
     <div class="py-2 px-3 py-lg-3 px-lg-4">
         <div class="row">
         <% if $Cover %>
-            <div class="col-12 col-sm-4 mb-2 mb-sm-0"><img src="{$Cover.ScaleMaxWidth(200).CropHeight(100).URL}" class="img-fluid" /></div>
+            <div class="col-12 col-sm-4 mb-2 mb-sm-0"><a class="d-inline-block" href="{$Link}"><img src="{$Cover.ScaleMaxWidth(200).CropHeight(100).URL}" class="img-fluid" /></a></div>
             <div class="col-12 col-sm-8"><span class="text-muted d-block mb-2"><span class="fa fa-map-marker"></span> {$Place.Nice}</span></div>
         <% else %>
             <div class="col-12"><span class="text-muted d-block mb-2"><span class="fa fa-map-marker"></span> {$Place.Nice}</span></div>

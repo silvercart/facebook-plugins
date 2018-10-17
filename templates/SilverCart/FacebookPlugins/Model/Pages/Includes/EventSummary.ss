@@ -6,7 +6,7 @@
     <div class="py-3 px-4">
         <div class="row">
         <% if $Cover %>
-            <div class="col-12 col-sm-4 mb-3 mb-sm-0"><img src="{$Cover.ScaleMaxWidth(500).CropHeight(250).URL}" class="img-fluid" /></div>
+            <div class="col-12 col-sm-4 mb-3 mb-sm-0"><a class="d-inline-block" href="{$Link}"><img src="{$Cover.ScaleMaxWidth(500).CropHeight(250).URL}" class="img-fluid" /></a></div>
         <% end_if %>
             <div class="
                  <% if $Cover %>
