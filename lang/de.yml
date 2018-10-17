@@ -29,6 +29,18 @@ de:
     Event: "Event"
     FacebookID: "Facebook ID"
     StartTime: "Beginnt am"
+  SilverCart\FacebookPlugins\Model\Place:
+    PLURALNAME: "Facebook Orte"
+    SINGULARNAME: "Facebook Ort"
+    City: "Stadt"
+    Country: "Land"
+    Events: "Events"
+    FacebookID: "Facebook ID"
+    Latitude: "Latitude"
+    Longitude: "Longitude"
+    Name: "Name"
+    Street: "Straße"
+    ZIP: "PLZ"
   SilverCart\FacebookPlugins\Model\Pages\EventsPage:
     PLURALNAME: "Facebook Events-Seiten"
     SINGULARNAME: "Facebook Events-Seite"

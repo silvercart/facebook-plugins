@@ -40,7 +40,6 @@ class Event extends DataObject
     private static $db = [
         'FacebookID'  => 'Varchar(32)',
         'Name'        => 'Varchar(64)',
-        'Place'       => 'Varchar(142)',
         'Description' => DBText::class,
         'StartTime'   => DBDatetime::class,
         'EndTime'     => DBDatetime::class,
@@ -52,6 +51,7 @@ class Event extends DataObject
      */
     private static $has_one = [
         'Cover' => Image::class,
+        'Place' => Place::class,
     ];
     /**
      * Has many relations.

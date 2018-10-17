@@ -265,6 +265,7 @@ class Client
         $task = $this->getTask();
         if (!is_null($task)) {
             $task->printError($error);
+            $task->addEmailError($error);
         }
         return $this;
     }

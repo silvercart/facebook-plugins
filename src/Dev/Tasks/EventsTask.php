@@ -6,6 +6,7 @@ use SilverCart\Extensions\Assets\ImageExtension;
 use SilverCart\FacebookPlugins\Client\EventsClient;
 use SilverCart\FacebookPlugins\Model\Event;
 use SilverCart\FacebookPlugins\Model\EventTime;
+use SilverCart\FacebookPlugins\Model\Place;
 use SilverStripe\Assets\Image;
 use SilverStripe\View\ArrayData;
 
@@ -80,17 +81,26 @@ class EventsTask extends Task
                 
                 $startTime = date('Y-m-d H:i:s', strtotime($event['start_time']));
                 $endTime   = date('Y-m-d H:i:s', strtotime($event['end_time']));
-                $existingEvent->Name        = $eventName;
-                $existingEvent->Description = $event['description'];
-                $existingEvent->Place       = $event['place']['name'];
-                $existingEvent->EndTime     = $endTime;
-                $existingEvent->StartTime   = $startTime;
+                $existingEvent->Name            = $eventName;
+                $existingEvent->Description     = $event['description'];
+                $existingEvent->EndTime         = $endTime;
+                $existingEvent->StartTime       = $startTime;
                 $existingEvent->CountAttending  = $event['attending_count'];
                 $existingEvent->CountInterested = $event['interested_count'];
                 $existingEvent->CountMaybe      = $event['maybe_count'];
+                $existingEvent->PlaceID         = $this->getPlace($event['place'])->ID;
                 $existingEvent->CoverID         = $this->getCover($event['cover'])->ID;
                 $existingEvent->write();
                 
+                if (!array_key_exists('event_times', $event)) {
+                    $event['event_times'] = [
+                        [
+                            'id'         => "0",
+                            'start_time' => $event['start_time'],
+                            'end_time'   => $event['end_time'],
+                        ]
+                    ];
+                }
                 $eventTimes  = $event['event_times'];
                 $facebookIDs = [];
                 $totalEventTimes  = count($eventTimes);
@@ -100,7 +110,7 @@ class EventsTask extends Task
                     $currentTimeIndex++;
                     $facebookID        = $eventTime['id'];
                     $facebookIDs[]     = $facebookID;
-                    $existingEventTime = EventTime::getByFacebookID($facebookID);
+                    $existingEventTime = $existingEvent->EventTimes()->filter('FacebookID', $facebookID)->first();
                     $startTime         = date('Y-m-d H:i:s', strtotime($eventTime['start_time']));
                     $endTime           = date('Y-m-d H:i:s', strtotime($eventTime['end_time']));
                     if (!($existingEventTime instanceof EventTime)
@@ -121,6 +131,7 @@ class EventsTask extends Task
         } else {
             $this->printInfo("No events found.");
         }
+        $this->sendEmail($this->config()->get('email_recipient'));
     }
     
     /**
@@ -151,5 +162,45 @@ class EventsTask extends Task
             $cover = ImageExtension::create_from_path($coverSource, $uploadPath, $targetFilename);
         }
         return $cover;
+    }
+    
+    /**
+     * Returns the place matching with the given Facebook place data.
+     * If the place doesn't exist yet, it will be created.
+     * 
+     * @param array $placeData Facebook place data
+     * 
+     * @return Place
+     */
+    protected function getPlace($placeData)
+    {
+        $facebookID = "0";
+        if (!array_key_exists('id', $placeData)) {
+            $existingPlace = Place::get()
+                    ->filter('Name', $placeData['name'])
+                    ->first();
+            if (!($existingPlace instanceof Place)) {
+                $existingPlace = Place::getByAddress($placeData['name']);
+            }
+        } else {
+            $facebookID    = $placeData['id'];
+            $existingPlace = Place::getByFacebookID($facebookID);
+        }
+        if ($existingPlace instanceof Place) {
+            return $existingPlace;
+        }
+        $place             = Place::create();
+        $place->FacebookID = $facebookID;
+        $place->Name       = $placeData['name'];
+        if (array_key_exists('location', $placeData)) {
+            $place->Street    = $placeData['location']['street'];
+            $place->ZIP       = $placeData['location']['zip'];
+            $place->City      = $placeData['location']['city'];
+            $place->Country   = $placeData['location']['country'];
+            $place->Latitude  = $placeData['location']['latitude'];
+            $place->Longitude = $placeData['location']['longitude'];
+        }
+        $place->write();
+        return $place;
     }
 }

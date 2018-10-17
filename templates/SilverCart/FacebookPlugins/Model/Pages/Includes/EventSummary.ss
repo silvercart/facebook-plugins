@@ -15,7 +15,7 @@
                  col-12
                  <% end_if %>
                  ">
-                <span class="text-muted d-block mb-4"><span class="fa fa-map-marker"></span> {$Place}</span>
+                <span class="text-muted d-block mb-4"><span class="fa fa-map-marker"></span> {$Place.Nice}</span>
                 <span class="text-muted d-block mb-4">{$Description.LimitCharactersToClosestWord(180)}
                     <a class="ml-2" href="{$Link}"><span class="fa fa-arrow-right"></span> weitere Details</a>
                     <a class="ml-2" href="{$FacebookLink}" target="blank"><span class="fa fa-facebook-square"></span> {$fieldLabel('OpenInFacebook')} <span class="fa fa-xs fa-external-link"></span></a>

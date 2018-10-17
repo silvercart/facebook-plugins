@@ -6,6 +6,7 @@ use SilverCart\Dev\Tools;
 use SilverStripe\Control\Director;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\View\Requirements;
 
 /**
@@ -137,13 +138,20 @@ class EventTime extends DataObject
      * @return \SilverStripe\ORM\FieldType\DBHTMLText
      */
     public function getMicrodata($plain = false) {
+        $siteConfig = SiteConfig::current_site_config();
+        $place    = $this->Event()->Place();
         $address  = [
             '@type'           => 'PostalAddress',
-            'streetAddress'   => '',
-            'addressLocality' => '',
+            'streetAddress'   => $place->Street,
+            'addressLocality' => $place->City,
             'addressRegion'   => '',
-            'postalCode'      => '',
-            'addressCountry'  => '',
+            'postalCode'      => $place->ZIP,
+            'addressCountry'  => $place->Country,
+        ];
+        $performer = [
+            '@type' => 'Organization',
+            'name'  => $siteConfig->ShopName,
+            'url'   => Director::absoluteBaseURL(),
         ];
         $jsonData = [
             '@context'    => 'http://schema.org',
@@ -155,10 +163,14 @@ class EventTime extends DataObject
             'endDate'     => date('d/m/Y H:i', strtotime($this->EndTime)),
             'location'    => [
                 '@type'   => 'Place',
-                'name'    => $this->Event()->Place,
+                'name'    => $place->Name,
                 'address' => $address,
             ],
+            'performer'   => $performer,
         ];
+        if ($this->Event()->Cover()->exists()) {
+            $jsonData['image'] = $this->Event()->Cover()->AbsoluteLink();
+        }
         $this->extend('updateMicrodata', $jsonData);
 
         if (defined('JSON_PRETTY_PRINT')) {

@@ -26,6 +26,12 @@ class Task extends CliController
      */
     private static $client_class_name = Client::class;
     /**
+     * Email recipient for error/warning emails
+     *
+     * @var string
+     */
+    private static $email_recipient = null;
+    /**
      * CLient
      *
      * @var Client

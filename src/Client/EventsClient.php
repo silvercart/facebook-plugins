@@ -26,7 +26,6 @@ class EventsClient extends Client
      */
     public function pull($after = null)
     {
-        $this->setPageAccessToken();
         $events     = [];
         $fbPageID   = self::get_page_id();
         $paramAfter = "";

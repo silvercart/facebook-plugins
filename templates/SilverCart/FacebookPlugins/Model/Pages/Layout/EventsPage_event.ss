@@ -13,7 +13,7 @@
             <% if $Cover %>
                 <div class="float-left mr-2 mr-lg-3 mb-2 mb-lg-3 mr-xl-4 w-100 w-sm-30 w-xl-50 w-xxl-30"><img src="{$Cover.ScaleMaxWidth(500).URL}" class="img-fluid" /></div>
             <% end_if %>
-                <span class="text-muted text-md d-block mb-3 pb-2 pt-0 border-bottom"><span class="fa fa-map-marker"></span> {$Place}</span>
+                <span class="text-muted text-md d-block mb-3 pb-2 pt-0 border-bottom"><span class="fa fa-map-marker"></span> {$Place.Nice}</span>
                 <span class="text-muted text-md d-block mb-0 pb-2 pt-0"><span class="fa fa-clock-o"></span> <%t SilverCart.Until 'until' %> {$EndTime.Format('dd')}. {$EndTime.ShortMonth}</span>
                 <div class="pl-4">
                 <% loop $UpcomingTimes.limit(4) %>
