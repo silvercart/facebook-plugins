@@ -26,6 +26,7 @@ class EventsPageController extends PageController
         'event',
         'past',
         'upcoming',
+        'monitor',
     ];
     
     public function getEvent()
