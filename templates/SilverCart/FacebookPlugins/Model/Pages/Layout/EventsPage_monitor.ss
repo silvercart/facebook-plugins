@@ -5,7 +5,7 @@
             <header class="sr-only"><h1>{$Title}</h1></header>
             <div class="row no-gutters">
                 <div class="col-6">
-                    <div class="fb-events-fade h-100 first active">
+                    <div class="fb-events-fade h-100 first active h-100">
                     <% if $Events %>
                         <% loop $Events.limit(3) %>
                             <% include SilverCart/FacebookPlugins/Model/Pages/EventSummary_monitor %>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-6">
                     <% if $UpcomingEvents.limit(8) %>
-                    <section class="bg-white border shadow-sm m-1 last-child-no-border d-none d-md-block">
+                    <section class="bg-white border shadow-sm m-1 last-child-no-border d-none d-md-block h-100">
                         <header class="sr-only"><h2 class="p-0 m-0 d-inline-block"><%t SilverCart\FacebookPlugins\Model\Pages\EventsPage.UpcomingEvents 'Upcoming Events' %></h2></header>
                         <% loop $UpcomingEvents.limit(8) %>
                             <% include SilverCart/FacebookPlugins/Model/Pages/EventTimeSummary_monitor %>

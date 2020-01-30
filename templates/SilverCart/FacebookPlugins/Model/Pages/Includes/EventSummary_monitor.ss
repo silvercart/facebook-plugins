@@ -1,16 +1,16 @@
-<section class="bg-white border shadow-sm m-1 pb-1" style="height: 32%!important; overflow: hidden;">
+<section class="bg-white border shadow-sm m-1 pb-0" style="height: 33%!important; overflow: hidden;">
     <header class="p-3 border-bottom">
         <h2 class="p-0 m-0 d-inline-block"><a href="{$Link}">{$Name}</a></h2>
     </header>
     <div class="row no-gutters">
-        <div class="col-6 p-1">
+        <div class="col-7 p-1">
         <% if $Cover %>
             <img src="{$Cover.FillMax(348,160).URL}" alt="{$Name}" class="img-fluid" />
         <% else %>
             &nbsp;
         <% end_if %>
         </div>
-        <div class="col-6 p-2 text-center">
+        <div class="col-5 p-2 text-center">
             <% loop $UpcomingTimes.limit(1) %>
             <span class="border rounded mt-4 p-1 pb-0 mr-2 d-inline-block text-lg">
                 <span class="float-left text-center mx-1">
