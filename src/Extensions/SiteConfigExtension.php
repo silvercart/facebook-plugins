@@ -5,6 +5,7 @@ namespace SilverCart\FacebookPlugins\Extensions;
 use SilverCart\Dev\Tools;
 use SilverCart\Forms\FormFields\TextareaField;
 use SilverCart\Forms\FormFields\TextField;
+use SilverCart\Model\CookieConsent\ExternalResource;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\ToggleCompositeField;
@@ -30,7 +31,6 @@ class SiteConfigExtension extends DataExtension
      * @var array
      */
     private static $db = [
-        'FacebookPluginSDKCode'      => DBText::class,
         'FacebookAppID'              => 'Varchar(32)',
         'FacebookAppSecret'          => 'Varchar(48)',
         'FacebookDefaultAccessToken' => 'Varchar(48)',
@@ -56,7 +56,7 @@ class SiteConfigExtension extends DataExtension
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 31.08.2018
      */
-    public function updateCMSFields(FieldList $fields)
+    public function updateCMSFields(FieldList $fields) : void
     {
         $fields->findOrMakeTab('Root.SocialMedia')->setTitle($this->owner->fieldLabel('SocialMediaTab'));
         $fields->addFieldToTab('Root.SocialMedia', ToggleCompositeField::create(
@@ -70,11 +70,6 @@ class SiteConfigExtension extends DataExtension
                     TextField::create('FacebookPageID',             $this->owner->fieldLabel('FacebookPageID')),
                 ]
         )->setStartClosed(!empty($this->owner->FacebookAppID)));
-        $fields->addFieldToTab('Root.SocialMedia', TextareaField::create('FacebookPluginSDKCode', $this->owner->fieldLabel('FacebookPluginSDKCode'))
-                ->setDescription($this->owner->fieldLabel('FacebookPluginSDKCodeDesc')));
-        if (empty($this->owner->FacebookPluginSDKCode)) {
-            $fields->addFieldToTab('Root.SocialMedia', LiteralField::create('FacebookPluginSDKCodeDesc', $this->owner->renderWith(self::class . '_DefaultSDKCodeDesc')));
-        }
     }
     
     /**
@@ -87,7 +82,7 @@ class SiteConfigExtension extends DataExtension
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 31.08.2018
      */
-    public function updateFieldLabels(&$labels)
+    public function updateFieldLabels(&$labels) : void
     {
         $labels = array_merge(
                 $labels,
@@ -99,6 +94,23 @@ class SiteConfigExtension extends DataExtension
     }
     
     /**
+     * Requires the default SDK code.
+     * 
+     * @return void
+     */
+    public function requireDefaultRecords() : void
+    {
+        ExternalResource::singleton()->requireDefaultRecords();
+        $sdkCode = ExternalResource::getByName('FacebookPluginSDKCode');
+        if ($sdkCode instanceof ExternalResource
+         && empty($sdkCode->Code)
+        ) {
+            $sdkCode->Code = $this->owner->DefaultFacebookPluginSDKCode->getValue();
+            $sdkCode->write();
+        }
+    }
+    
+    /**
      * Returns the default Facebook Plugin SDK code.
      * 
      * @return \SilverStripe\ORM\FieldType\DBHTMLText
@@ -106,7 +118,7 @@ class SiteConfigExtension extends DataExtension
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 31.08.2018
      */
-    public function getDefaultFacebookPluginSDKCode()
+    public function getDefaultFacebookPluginSDKCode() : DBHTMLText
     {
         return $this->owner->renderWith(self::class . '_DefaultSDKCode');
     }

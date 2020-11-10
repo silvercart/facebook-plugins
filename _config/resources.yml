@@ -1,0 +1,8 @@
+---
+Name: silvercart-facebook-plugins-resources
+---
+SilverCart\Model\CookieConsent\ExternalResource:
+    defaults: 
+        FacebookPluginSDKCode:
+            Position: body
+            RestrictToLiveMode: false

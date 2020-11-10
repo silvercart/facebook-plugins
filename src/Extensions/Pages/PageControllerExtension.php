@@ -18,21 +18,6 @@ use SilverStripe\SiteConfig\SiteConfig;
 class PageControllerExtension extends Extension
 {
     /**
-     * Adds the Facebook Plugin SDK code to the custom footer HTML content.
-     * 
-     * @param string &$headerCustomHtmlContent Content to update
-     * 
-     * @return void
-     * 
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 20.09.2018
-     */
-    public function updateFooterCustomHtmlContent(&$footerCustomHtmlContent)
-    {
-        $footerCustomHtmlContent .= SiteConfig::current_site_config()->FacebookPluginSDKCode;
-    }
-    
-    /**
      * Adds some JS files.
      * 
      * @param array &$jsFiles JS files

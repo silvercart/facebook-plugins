@@ -88,24 +88,6 @@ class PagePluginWidget extends Widget
     }
     
     /**
-     * Adds the Facebook Plugin SDK code on after write if not done yet.
-     * 
-     * @return void
-     * 
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 31.08.2018
-     */
-    protected function onAfterWrite()
-    {
-        parent::onAfterWrite();
-        $siteConfig = SiteConfig::current_site_config();
-        if (empty($siteConfig->FacebookPluginSDKCode)) {
-            $siteConfig->FacebookPluginSDKCode = $siteConfig->DefaultFacebookPluginSDKCode->getValue();
-            $siteConfig->write();
-        }
-    }
-    
-    /**
      * Returns the value to use in the template's data-tabs attribute.
      * 
      * @return string

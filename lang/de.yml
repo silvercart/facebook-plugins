@@ -76,3 +76,6 @@ de:
     TITLE: "Bevorstehende Facebook Veranstaltungen"
     EventQuantity: "Anzahl Veranstaltungen"
     EventQuantityDesc: "Anzahl der bevorstehenden Veranstaltungen, die angezeigt werden sollen."
+  SilverCart\Model\CookieConsent\ExternalResource:
+    FacebookPluginSDKCode_Name: 'Facebook Plugin SDK Code'
+    FacebookPluginSDKCode_Description: 'Der Facebook Plugin SDK Code wird benötigt, um Facebook Plugins verwenden zu können.'
